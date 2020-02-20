@@ -14,7 +14,7 @@ public class RequestTest {
     }
 
     private static void testIfEqual(String title, String expected, String result) {
-        if(expected==result) {
+        if(expected.equals(result)) {
             System.out.println(title + " passed: " + result + " equals " + expected + ".");
         } else {
             System.out.println(title + " failed: " + result + " does not equal " + expected + ".");

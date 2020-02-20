@@ -12,6 +12,9 @@ public class Request {
         this.HTTPVersion = null;
         this.host = null;
         this.userAgent = null;
+
+        String[] requestLines = requestText.split("\r\n",5);
+        parseHeaderLine1(requestLines[0]);
     }
 
     public String getType() {
@@ -32,6 +35,13 @@ public class Request {
 
     public String getUserAgent() {
         return this.userAgent;
+    }
+
+    private void parseHeaderLine1(String headerLine) {
+        String[] values = headerLine.strip().split(" ",3);
+        this.type = values[0];
+        this.resource = values[1];
+        this.HTTPVersion = values[2];
     }
 
 }
