@@ -13,8 +13,10 @@ public class Request {
         this.host = null;
         this.userAgent = null;
 
-        String[] requestLines = requestText.split("\r\n",5);
-        parseHeaderLine1(requestLines[0]);
+        String[] requestLines = requestText.split("\r\n",4);
+        parseFirstRequestLine(requestLines[0]);
+        parseOtherRequestLine(requestLines[1]);
+        parseOtherRequestLine(requestLines[2]);
     }
 
     public String getType() {
@@ -37,11 +39,24 @@ public class Request {
         return this.userAgent;
     }
 
-    private void parseHeaderLine1(String headerLine) {
+    private void parseFirstRequestLine(String headerLine) {
         String[] values = headerLine.strip().split(" ",3);
         this.type = values[0];
         this.resource = values[1];
         this.HTTPVersion = values[2];
+    }
+
+    private void parseOtherRequestLine(String headerLine) {
+        String[] values = headerLine.strip().split(" ",2);
+
+        if (values[0].equals("Host:")) {
+            this.host = values[1];
+        }
+
+        if (values[0].equals("User-Agent:")) {
+            this.userAgent = values[1];
+        }
+
     }
 
 }
