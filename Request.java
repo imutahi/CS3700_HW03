@@ -7,12 +7,6 @@ public class Request {
     private String userAgent;
 
     public Request(String requestText) {
-        this.type = null;
-        this.resource = null;
-        this.HTTPVersion = null;
-        this.host = null;
-        this.userAgent = null;
-
         String[] requestLines = requestText.split("\r\n",4);
         parseFirstRequestLine(requestLines[0]);
         parseOtherRequestLine(requestLines[1]);
@@ -37,6 +31,21 @@ public class Request {
 
     public String getUserAgent() {
         return this.userAgent;
+    }
+
+    public String toString() {
+        String firstLine = this.type + " " + this.resource + " " + this.HTTPVersion + "\r\n";
+        String secondLine = "Host: " + this.host + "\r\n";
+        String thirdLine = "User-Agent: " + this.userAgent + "\r\n";
+        String fourthLine = "\r\n";
+
+        String responseString = "";
+        responseString += firstLine;
+        responseString += secondLine;
+        responseString += thirdLine;
+        responseString += fourthLine;
+
+        return responseString;
     }
 
     private void parseFirstRequestLine(String headerLine) {

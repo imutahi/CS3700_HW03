@@ -6,11 +6,13 @@ public class RequestTest {
                             "User-Agent: Mozzilla/4.0\r\n"  +
                             "\r\n";
         Request request = new Request(requestText);
+
         testIfEqual("Request Type","GET",request.getType());
         testIfEqual("Requested Resource","/CS3700.htm",request.getResource());
         testIfEqual("HTTP Version","HTTP/1.1",request.getHTTPVersion());
         testIfEqual("Host","3700a.msudenver.edu",request.getHost());
         testIfEqual("User-Agent","Mozzilla/4.0",request.getUserAgent());
+        testIfEqual("To String",requestText,request.toString());
     }
 
     private static void testIfEqual(String title, String expected, String result) {
