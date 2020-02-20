@@ -13,7 +13,7 @@ public class RequestTest {
         testIfEqual("User-Agent","Mozzilla/4.0",request.getUserAgent());
     }
 
-    private void testIfEqual(String title, String expected, String result) {
+    private static void testIfEqual(String title, String expected, String result) {
         if(expected==result) {
             System.out.println(title + " passed: " + result + " equals " + expected + ".");
         } else {
