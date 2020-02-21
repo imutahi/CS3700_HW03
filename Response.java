@@ -1,12 +1,17 @@
 import java.io.*;
 public class Response {
     private String filePath;
-    private String body; 
-    public Response() {
+    private String body;
+
+    public Response(String method, String path) {
     }
 
     public String getBody() {
         return this.body;
+    }
+
+    public String toString() {
+        return null;
     }
 
     public void setFilePath(String filePath) {
@@ -35,7 +40,6 @@ public class Response {
             br.close();
         }
     }
-
 
 
 }

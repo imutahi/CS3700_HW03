@@ -10,9 +10,16 @@ public class ResponseTest {
             htmFile = "";
         }
 
-        Response response = new Response();
-        response.setFilePath("/3700.htm");
-        testIfEqual("Get Body",htmFile,response.getBody());
+        Response response = new Response("GET", "/3700.htm");
+        String expectedText = "200 OK\r\n" + 
+                              "\r\n" +
+                              htmFile + 
+                              "\r\n" +
+                              "\r\n" +
+                              "\r\n" +
+                              "\r\n";
+
+        testIfEqual("To String",expectedText,response.toString());
     }
 
     private static void testIfEqual(String title, String expected, String result) {
