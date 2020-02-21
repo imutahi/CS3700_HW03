@@ -6,6 +6,9 @@ public class Request {
     private String host;
     private String userAgent;
 
+    public Request() {
+    }
+
     public Request(String requestText) {
         String[] requestLines = requestText.split("\r\n",4);
         parseFirstRequestLine(requestLines[0]);
@@ -17,20 +20,35 @@ public class Request {
         return this.type;
     }
 
+    public void setType(String type) {
+    }
+
     public String getResource() {
         return this.resource;
+    }
+
+    public void setResource(String resource) {
     }
 
     public String getHTTPVersion() {
         return this.HTTPVersion;
     }
 
+    public void setHTTPVersion(String HTTPVersion) {
+    }
+
     public String getHost() {
         return this.host;
     }
 
+    public void setHost(String host) {
+    }
+
     public String getUserAgent() {
         return this.userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
     }
 
     public String toString() {
