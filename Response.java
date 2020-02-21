@@ -7,6 +7,18 @@ public class Response {
     private int responseCode;
     
     public Response(String responseText) {
+        String[] responseLines = responseText.split("\r\n",4);
+        String[] firstLine = responseLines[0].split(" ",5);
+        Integer tempResponseCode = Integer.valueOf(firstLine[0]);
+        if (tempResponseCode != 200 && tempResponseCode != 400 && tempResponseCode != 404) {
+            System.out.println("Recieved Invalid Response Code: " + tempResponseCode.toString());
+            return;
+        } else {
+            this.responseCode = tempResponseCode;
+        }
+        if (this.responseCode == 200) {
+            this.body = responseLines[3].strip() + "\n";
+        }
     }
 
     public Response(String method, String path) {
@@ -73,12 +85,21 @@ public class Response {
 
     }
 
-    public static int getResponseCode() {
+    public int getResponseCode() {
         return this.responseCode;
     }
 
+    // Modified from https://stackoverflow.com/a/1053499/3102909 by https://stackoverflow.com/users/331473/adam-wagner
+    // With License: https://creativecommons.org/licenses/by-sa/4.0/
     public void writeBodyToDisk() {
-
+        try {
+            File newFile = new File(this.filePath);
+            FileWriter fw = new FileWriter(newFile);
+            fw.write(this.body);
+            fw.close();
+        } catch (IOException exception){
+            exception.printStackTrace();
+        }
     }
 
     //Method found on Stack Overflow (author is Mr.D): https://stackoverflow.com/questions/16027229/reading-from-a-text-file-and-storing-in-a-string
