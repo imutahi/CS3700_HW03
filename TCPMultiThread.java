@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TCPMultiThread extends Thread {
     private Socket clientSocket = null;
-    private List<String> requestInfo = new ArrayList<>();
+    private StringBuilder requestStrings = new StringBuilder();
 
     public TCPMultiThread(Socket socket) {
         super("TCPMultiServerThread");
@@ -32,6 +32,7 @@ public class TCPMultiThread extends Thread {
 
                     System.out.println(fromClient);
                     fromClient = cSocketIn.readLine();
+                    requestStrings.append(fromClient);
                     if (fromClient == null) {
                         break;
                     }
@@ -42,24 +43,15 @@ public class TCPMultiThread extends Thread {
                 }
 
 
-                getRequestInfo(requestLine);
                 System.out.println("");
 
+                Request request = new Request(requestStrings.toString());
+                Response response = new Response(request.getType(),request.getResource());
 
-                String method = requestInfo.get(0);
-                String fileName = requestInfo.get(1).substring(1);
-                String requestCase = determineMethod(method, fileName);
-
-                String response = createResponseMessage(requestCase);
                 cSocketOut.println(response);
 
-                if (requestCase.equals("200 OK")) {
-                    String data = readFile(fileName);
-                    cSocketOut.println(data);
-                }
-
                 requestLine = null;
-
+                requestStrings.setLength(0);
             }
 
             cSocketOut.close();
@@ -69,54 +61,5 @@ public class TCPMultiThread extends Thread {
         } catch (IOException error) {
             error.printStackTrace();
         }
-
-
-    }
-
-    //Method found on Stack Overflow (author is Mr.D): https://stackoverflow.com/questions/16027229/reading-from-a-text-file-and-storing-in-a-string
-    private static String readFile(String fileName) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append("\n");
-                line = br.readLine();
-            }
-            return sb.toString();
-        } finally {
-            br.close();
-        }
-    }
-
-    private void getRequestInfo(String requestLine){
-        requestInfo.clear();
-        for (String word : requestLine.split(" ")) {
-            requestInfo.add(word);
-        }
-    }
-
-    private static String createResponseMessage(String requestCase) {
-        String statusLine = "HTTP/1.1" + " " + requestCase + "\r\n";
-        Date d = new Date();
-        String date = "Date: " + d.toString() + "\r\n";
-        String server = "Server: Apache/2.0.52 (CentOS) \r\n";
-        return statusLine + date + server;
-    }
-
-
-    private static String determineMethod(String method, String fileName) {
-        File f = new File(fileName);
-
-        if (method.equals("GET") && (f.isFile())) {
-            return "200 OK";
-        } else if ((method.equals("GET")) && !f.isFile()) {
-            return "404 Not Found";
-        } else {
-            return "400 Bad Request";
-        }
-
     }
 }
