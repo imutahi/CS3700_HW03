@@ -17,6 +17,7 @@ public class RequestTest {
         Request request2 = new Request();
         request2.setType("GET");
         request2.setResource("/CS3700.htm");
+        request2.setHTTPVersion("HTTP/1.1");
         request2.setHost("3700a.msudenver.edu");
         request2.setUserAgent("Mozzilla/4.0");
         String requestText2 = request2.toString();

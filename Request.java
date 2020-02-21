@@ -21,6 +21,7 @@ public class Request {
     }
 
     public void setType(String type) {
+        this.type = type;
     }
 
     public String getResource() {
@@ -28,6 +29,7 @@ public class Request {
     }
 
     public void setResource(String resource) {
+        this.resource = resource;
     }
 
     public String getHTTPVersion() {
@@ -35,6 +37,7 @@ public class Request {
     }
 
     public void setHTTPVersion(String HTTPVersion) {
+        this.HTTPVersion = HTTPVersion;
     }
 
     public String getHost() {
@@ -42,6 +45,7 @@ public class Request {
     }
 
     public void setHost(String host) {
+        this.host = host;
     }
 
     public String getUserAgent() {
@@ -49,6 +53,7 @@ public class Request {
     }
 
     public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 
     public String toString() {
