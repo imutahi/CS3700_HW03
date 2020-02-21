@@ -17,7 +17,7 @@ public class Response {
             this.responseCode = tempResponseCode;
         }
         if (this.responseCode == 200) {
-            this.body = responseLines[3].strip() + "\n";
+            this.body = responseLines[3].trim() + "\n";
         }
     }
 

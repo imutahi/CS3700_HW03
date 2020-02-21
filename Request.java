@@ -72,14 +72,14 @@ public class Request {
     }
 
     private void parseFirstRequestLine(String headerLine) {
-        String[] values = headerLine.strip().split(" ",3);
+        String[] values = headerLine.trim().split(" ",3);
         this.type = values[0];
         this.resource = values[1];
         this.HTTPVersion = values[2];
     }
 
     private void parseOtherRequestLine(String headerLine) {
-        String[] values = headerLine.strip().split(" ",2);
+        String[] values = headerLine.trim().split(" ",2);
 
         if (values[0].equals("Host:")) {
             this.host = values[1];
