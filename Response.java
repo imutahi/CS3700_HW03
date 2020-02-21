@@ -1,3 +1,4 @@
+import java.io.*;
 public class Response {
     private String filePath;
     private String body; 
@@ -8,10 +9,15 @@ public class Response {
         return this.body;
     }
 
-    public static void setFilePath(String filePath) {
-    	this.filePath = String filepath; 
-        this.body = readFile(filepath);
-    }
+    public void setFilePath(String filePath) {
+    	this.filePath = "." + filePath; 
+        try{
+            this.body = readFile(this.filePath);
+        } catch(IOException exception) {
+            System.out.println("Couldnt Read File");
+        } 
+    
+    }  
     
     //Method found on Stack Overflow (author is Mr.D): https://stackoverflow.com/questions/16027229/reading-from-a-text-file-and-storing-in-a-string
     private static String readFile(String fileName) throws IOException {
